@@ -1,0 +1,438 @@
+/**
+ * Advanced Lead Manager Pro - Frontend Styles
+ */
+
+/* ============================================
+   CONTACT FORM - ENHANCED
+   ============================================ */
+
+.lmp-contact-section {
+    max-width: 900px;
+    margin: var(--spacing-3xl, 6rem) auto;
+    padding: 0 var(--spacing-lg, 2rem);
+}
+
+.lmp-subtitle {
+    color: var(--color-text-secondary);
+    margin-bottom: 3rem;
+    font-size: var(--font-size-lg, 1.125rem);
+}
+
+.lmp-contact-form {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Form Rows */
+.lmp-form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg, 2rem);
+    margin-bottom: var(--spacing-lg, 2rem);
+}
+
+/* Form Groups */
+.lmp-form-group {
+    margin-bottom: var(--spacing-lg, 2rem);
+    position: relative;
+}
+
+.lmp-form-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs, 0.5rem);
+    font-weight: var(--font-weight-medium, 500);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm, 0.875rem);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.lmp-form-group label .required {
+    color: var(--color-secondary, #ec4899);
+    margin-left: 2px;
+}
+
+/* Enhanced Inputs */
+.lmp-input {
+    width: 100%;
+    padding: var(--spacing-sm, 1rem) var(--spacing-md, 1.5rem);
+    background: var(--color-surface, rgba(255, 255, 255, 0.7));
+    border: 2px solid var(--color-border, rgba(0, 0, 0, 0.1));
+    border-radius: var(--radius-lg, 0.75rem);
+    font-family: var(--font-family);
+    font-size: var(--font-size-base, 1rem);
+    color: var(--color-text-primary);
+    transition: all var(--transition-base, 0.25s);
+    backdrop-filter: blur(10px);
+}
+
+.lmp-input:focus {
+    outline: none;
+    border-color: var(--color-primary, #6366f1);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    transform: translateY(-2px);
+}
+
+.lmp-input::placeholder {
+    color: var(--color-text-muted, #9ca3af);
+}
+
+/* Validation States */
+.lmp-input.valid {
+    border-color: #10b981;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2310b981'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 20px;
+    padding-right: 3rem;
+}
+
+.lmp-input.invalid {
+    border-color: #ef4444;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23ef4444'%3E%3Cpath fill-rule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 20px;
+    padding-right: 3rem;
+}
+
+.lmp-error-message {
+    display: none;
+    color: #ef4444;
+    font-size: var(--font-size-sm, 0.875rem);
+    margin-top: var(--spacing-xs, 0.5rem);
+}
+
+.lmp-input.invalid~.lmp-error-message {
+    display: block;
+    animation: slideInDown 0.3s ease-out;
+}
+
+/* Character Counter */
+.lmp-char-counter {
+    text-align: right;
+    font-size: var(--font-size-sm, 0.875rem);
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-xs, 0.5rem);
+}
+
+.lmp-char-count {
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--color-primary);
+}
+
+/* File Upload */
+.lmp-file-upload-wrapper {
+    position: relative;
+}
+
+.lmp-file-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.lmp-file-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm, 1rem);
+    padding: var(--spacing-xl, 3rem) var(--spacing-lg, 2rem);
+    background: var(--color-surface);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    text-align: center;
+}
+
+.lmp-file-label:hover {
+    border-color: var(--color-primary);
+    background: var(--color-surface-elevated);
+    transform: translateY(-2px);
+}
+
+.lmp-file-icon {
+    font-size: 2rem;
+}
+
+.lmp-file-text {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+}
+
+.lmp-file-info {
+    display: block;
+    font-size: var(--font-size-xs, 0.75rem);
+    color: var(--color-text-muted);
+    font-weight: normal;
+    text-transform: none;
+    margin-top: 4px;
+}
+
+.lmp-file-preview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-sm);
+    background: var(--color-surface-elevated);
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-sm);
+    animation: slideInDown 0.3s ease-out;
+}
+
+.lmp-file-name {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-medium);
+}
+
+.lmp-file-remove {
+    background: var(--color-secondary);
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    transition: all var(--transition-fast);
+}
+
+.lmp-file-remove:hover {
+    transform: scale(1.1);
+    background: #dc2626;
+}
+
+/* Checkbox Group */
+.lmp-checkbox-group {
+    margin-top: var(--spacing-xl);
+}
+
+.lmp-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    font-weight: normal;
+    text-transform: none;
+}
+
+.lmp-checkbox-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--color-primary);
+}
+
+/* Submit Button Enhanced */
+.lmp-submit-btn {
+    position: relative;
+    width: 100%;
+    margin-top: var(--spacing-lg);
+    overflow: hidden;
+}
+
+.lmp-btn-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.lmp-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.lmp-submit-btn.loading .lmp-btn-text {
+    opacity: 0;
+}
+
+.lmp-submit-btn.loading .lmp-btn-loader {
+    display: block;
+}
+
+/* Progress Bar */
+.lmp-progress-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--color-surface);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-top: var(--spacing-md);
+}
+
+.lmp-progress-fill {
+    height: 100%;
+    background: var(--gradient-primary);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+/* Messages */
+.lmp-message {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin-top: var(--spacing-lg);
+    font-weight: var(--font-weight-medium);
+    animation: slideInDown 0.3s ease-out;
+}
+
+.lmp-message.success {
+    background: rgba(16, 185, 129, 0.1);
+    border: 2px solid rgba(16, 185, 129, 0.3);
+    color: #059669;
+}
+
+.lmp-message.error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 2px solid rgba(239, 68, 68, 0.3);
+    color: #dc2626;
+}
+
+.lmp-message.info {
+    background: rgba(59, 130, 246, 0.1);
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    color: #2563eb;
+}
+
+/* Fade In Animation */
+.lmp-fade-in {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading State */
+.lmp-contact-form.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+/* Stats Widget */
+.lmp-stats-widget {
+    padding: var(--spacing-xl);
+    margin: var(--spacing-xl) 0;
+}
+
+.lmp-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.lmp-stat-item {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: var(--color-surface-elevated);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+}
+
+.lmp-stat-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.lmp-stat-value {
+    font-size: var(--font-size-4xl, 2.5rem);
+    font-weight: var(--font-weight-extrabold);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.lmp-stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-top: var(--spacing-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .lmp-form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .lmp-contact-section {
+        padding: 0 var(--spacing-md);
+    }
+
+    .lmp-file-label {
+        padding: var(--spacing-lg);
+    }
+}
+
+/* Dark Mode Enhancements */
+[data-theme="dark"] .lmp-input {
+    background: rgba(30, 30, 40, 0.6);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .lmp-file-label {
+    background: rgba(30, 30, 40, 0.6);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .lmp-file-label:hover {
+    border-color: var(--color-primary);
+}
+
+/* Accessibility */
+.lmp-input:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.lmp-submit-btn:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 4px;
+}
+
+/* Print Styles */
+@media print {
+    .lmp-contact-form {
+        display: none;
+    }
+}

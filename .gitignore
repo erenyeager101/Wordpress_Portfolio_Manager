@@ -1,0 +1,43 @@
+# WordPress
+wp-config.php
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/backup-db/
+wp-content/cache/
+wp-content/backups/
+
+# Theme
+wp-content/themes/smart-portfolio/node_modules/
+wp-content/themes/smart-portfolio/assets/css/*.map
+wp-content/themes/smart-portfolio/.sass-cache/
+wp-content/themes/smart-portfolio/package-lock.json
+
+# Plugin
+wp-content/plugins/lead-manager/node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+npm-debug.log*
+error_log
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local

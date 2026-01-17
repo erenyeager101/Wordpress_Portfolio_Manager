@@ -1,0 +1,24 @@
+{
+  "name": "smart-portfolio-theme",
+  "version": "1.0.0",
+  "description": "Premium WordPress theme with glassmorphism design and portfolio management",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass src/scss/main.scss:assets/css/main.css --style=compressed --no-source-map",
+    "sass:watch": "sass src/scss/main.scss:assets/css/main.css --watch --style=expanded --source-map",
+    "sass:dev": "sass src/scss/main.scss:assets/css/main.css --style=expanded --source-map",
+    "build": "npm run sass",
+    "dev": "npm run sass:watch"
+  },
+  "keywords": [
+    "wordpress",
+    "theme",
+    "portfolio",
+    "glassmorphism"
+  ],
+  "author": "Your Name",
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+    "sass": "^1.69.5"
+  }
+}
