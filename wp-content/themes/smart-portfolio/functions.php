@@ -133,6 +133,24 @@ function smart_portfolio_register_cpts() {
         'menu_icon' => 'dashicons-email',
         'supports' => array('title', 'custom-fields'),
     ));
+
+    // Testimonials CPT
+    register_post_type('testimonial', array(
+        'label' => __('Testimonials', 'smart-portfolio'),
+        'labels' => array(
+            'name' => __('Testimonials', 'smart-portfolio'),
+            'singular_name' => __('Testimonial', 'smart-portfolio'),
+            'add_new' => __('Add New', 'smart-portfolio'),
+            'add_new_item' => __('Add New Testimonial', 'smart-portfolio'),
+            'edit_item' => __('Edit Testimonial', 'smart-portfolio'),
+        ),
+        'public' => true,
+        'publicly_queryable' => false,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'menu_icon' => 'dashicons-format-quote',
+        'supports' => array('title', 'editor', 'thumbnail'),
+    ));
 }
 add_action('init', 'smart_portfolio_register_cpts');
 
@@ -262,3 +280,140 @@ function smart_portfolio_body_classes($classes) {
     return $classes;
 }
 add_filter('body_class', 'smart_portfolio_body_classes');
+
+/**
+ * Add custom meta boxes for testimonials
+ */
+function smart_portfolio_add_testimonial_meta_boxes() {
+    add_meta_box(
+        'testimonial_details',
+        __('Testimonial Details', 'smart-portfolio'),
+        'smart_portfolio_testimonial_details_callback',
+        'testimonial',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'smart_portfolio_add_testimonial_meta_boxes');
+
+function smart_portfolio_testimonial_details_callback($post) {
+    wp_nonce_field('smart_portfolio_save_testimonial_details', 'smart_portfolio_testimonial_details_nonce');
+
+    $client_position = get_post_meta($post->ID, '_client_position', true);
+    $client_company = get_post_meta($post->ID, '_client_company', true);
+    ?>
+    <p>
+        <label for="client_position"><?php _e('Position:', 'smart-portfolio'); ?></label><br>
+        <input type="text" id="client_position" name="client_position" value="<?php echo esc_attr($client_position); ?>" style="width: 100%;">
+    </p>
+    <p>
+        <label for="client_company"><?php _e('Company:', 'smart-portfolio'); ?></label><br>
+        <input type="text" id="client_company" name="client_company" value="<?php echo esc_attr($client_company); ?>" style="width: 100%;">
+    </p>
+    <?php
+}
+
+function smart_portfolio_save_testimonial_details($post_id) {
+    if (!isset($_POST['smart_portfolio_testimonial_details_nonce'])) {
+        return;
+    }
+    if (!wp_verify_nonce($_POST['smart_portfolio_testimonial_details_nonce'], 'smart_portfolio_save_testimonial_details')) {
+        return;
+    }
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    $fields = array('client_position', 'client_company');
+    foreach ($fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, '_' . $field, sanitize_text_field($_POST[$field]));
+        }
+    }
+}
+add_action('save_post_testimonial', 'smart_portfolio_save_testimonial_details');
+
+/**
+ * Shortcode for Skill Bar
+ */
+function smart_portfolio_skill_bar_shortcode($atts) {
+    $a = shortcode_atts(array(
+        'title' => 'Skill',
+        'percent' => '50',
+    ), $atts);
+
+    ob_start();
+    ?>
+    <div class="skill-bar">
+        <div class="skill-bar__info">
+            <span class="skill-bar__title"><?php echo esc_html($a['title']); ?></span>
+            <span class="skill-bar__percent"><?php echo esc_html($a['percent']); ?>%</span>
+        </div>
+        <div class="skill-bar__progress-container">
+            <div class="skill-bar__progress" style="width: 0%" data-width="<?php echo esc_attr($a['percent']); ?>%"></div>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('skill_bar', 'smart_portfolio_skill_bar_shortcode');
+
+/**
+ * Shortcode for Testimonials Slider
+ */
+function smart_portfolio_testimonial_slider_shortcode($atts) {
+    $testimonials = new WP_Query(array(
+        'post_type' => 'testimonial',
+        'posts_per_page' => 5,
+        'orderby' => 'date',
+        'order' => 'DESC',
+    ));
+
+    if (!$testimonials->have_posts()) {
+        return '';
+    }
+
+    ob_start();
+    ?>
+    <div class="testimonial-slider-container">
+        <div class="testimonial-slider">
+            <?php while ($testimonials->have_posts()) : $testimonials->the_post();
+                $position = get_post_meta(get_the_ID(), '_client_position', true);
+                $company = get_post_meta(get_the_ID(), '_client_company', true);
+            ?>
+                <div class="testimonial-slide glass-card">
+                    <div class="testimonial-content">
+                        <?php the_content(); ?>
+                    </div>
+                    <div class="testimonial-author">
+                        <?php if (has_post_thumbnail()) : ?>
+                            <div class="testimonial-avatar">
+                                <?php the_post_thumbnail('thumbnail'); ?>
+                            </div>
+                        <?php endif; ?>
+                        <div class="testimonial-meta">
+                            <h4 class="testimonial-name"><?php the_title(); ?></h4>
+                            <?php if ($position || $company) : ?>
+                                <p class="testimonial-role">
+                                    <?php echo esc_html($position); ?>
+                                    <?php if ($position && $company) echo ' at '; ?>
+                                    <?php echo esc_html($company); ?>
+                                </p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endwhile; wp_reset_postdata(); ?>
+        </div>
+        <div class="testimonial-controls">
+            <button class="prev-testimonial" aria-label="Previous Testimonial">&larr;</button>
+            <button class="next-testimonial" aria-label="Next Testimonial">&rarr;</button>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('testimonial_slider', 'smart_portfolio_testimonial_slider_shortcode');
