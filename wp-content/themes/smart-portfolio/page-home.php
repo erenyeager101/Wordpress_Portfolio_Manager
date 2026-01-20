@@ -2,7 +2,7 @@
 /**
  * Template Name: Home Page
  * 
- * Custom home page template with projects and contact form
+ * Custom home page template with projects, skills, testimonials and contact form
  *
  * @package Smart_Portfolio
  */
@@ -29,9 +29,8 @@ get_header();
 <!-- Projects Section -->
 <section id="projects" class="section">
     <div class="container">
-        <h2 class="text-center" style="margin-bottom: 1rem;">Featured Projects</h2>
-        <p class="text-center"
-            style="color: var(--color-text-secondary); margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <h2 class="text-center mb-2">Featured Projects</h2>
+        <p class="text-center mb-4" style="color: var(--color-text-secondary); max-width: 600px; margin-left: auto; margin-right: auto;">
             Explore our portfolio of successful projects and see how we've helped businesses achieve their goals.
         </p>
 
@@ -104,12 +103,48 @@ get_header();
     </div>
 </section>
 
+<!-- Skills Section -->
+<section id="skills" class="section" style="background: var(--color-bg-secondary);">
+    <div class="container">
+        <h2 class="text-center mb-2">Technical Expertise</h2>
+        <p class="text-center mb-4" style="color: var(--color-text-secondary); max-width: 600px; margin-left: auto; margin-right: auto;">
+            Our team utilizes the latest technologies to build robust and scalable solutions.
+        </p>
+
+        <div class="reveal" style="max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div>
+                <?php echo do_shortcode('[skill_bar title="WordPress & PHP" percent="95"]'); ?>
+                <?php echo do_shortcode('[skill_bar title="React.js" percent="90"]'); ?>
+                <?php echo do_shortcode('[skill_bar title="Node.js" percent="85"]'); ?>
+            </div>
+            <div>
+                <?php echo do_shortcode('[skill_bar title="UI/UX Design" percent="88"]'); ?>
+                <?php echo do_shortcode('[skill_bar title="HTML5 & SCSS" percent="98"]'); ?>
+                <?php echo do_shortcode('[skill_bar title="SEO Optimization" percent="80"]'); ?>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="section">
+    <div class="container">
+        <h2 class="text-center mb-2">Client Testimonials</h2>
+        <p class="text-center mb-4" style="color: var(--color-text-secondary); max-width: 600px; margin-left: auto; margin-right: auto;">
+            See what our clients have to say about working with us.
+        </p>
+
+        <div class="reveal">
+            <?php echo do_shortcode('[testimonial_slider]'); ?>
+        </div>
+    </div>
+</section>
+
 <!-- Blog Section -->
 <section id="blog" class="section" style="background: var(--color-bg-secondary);">
     <div class="container">
-        <h2 class="text-center" style="margin-bottom: 1rem;">Latest Insights</h2>
-        <p class="text-center"
-            style="color: var(--color-text-secondary); margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <h2 class="text-center mb-2">Latest Insights</h2>
+        <p class="text-center mb-4" style="color: var(--color-text-secondary); max-width: 600px; margin-left: auto; margin-right: auto;">
             Stay updated with our latest thoughts on design, development, and digital strategy.
         </p>
 

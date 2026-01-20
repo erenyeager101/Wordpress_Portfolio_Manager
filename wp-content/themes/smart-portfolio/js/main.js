@@ -204,6 +204,116 @@
     };
 
     // ============================================
+    // LIGHTBOX FOR IMAGES
+    // ============================================
+    const lightbox = () => {
+        const images = document.querySelectorAll('.entry-content img, .project-hero img');
+
+        if (images.length === 0) return;
+
+        // Create lightbox elements
+        const lightboxContainer = document.createElement('div');
+        lightboxContainer.className = 'lightbox';
+
+        const lightboxImage = document.createElement('img');
+
+        const closeButton = document.createElement('button');
+        closeButton.className = 'lightbox__close';
+        closeButton.innerHTML = '&times;';
+
+        lightboxContainer.appendChild(lightboxImage);
+        lightboxContainer.appendChild(closeButton);
+        document.body.appendChild(lightboxContainer);
+
+        // Open lightbox
+        images.forEach(img => {
+            img.style.cursor = 'zoom-in';
+            img.addEventListener('click', (e) => {
+                e.preventDefault();
+                lightboxImage.src = img.src;
+                lightboxContainer.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close lightbox
+        const closeLightbox = () => {
+            lightboxContainer.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        closeButton.addEventListener('click', closeLightbox);
+
+        lightboxContainer.addEventListener('click', (e) => {
+            if (e.target === lightboxContainer) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightboxContainer.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    };
+
+    // ============================================
+    // TESTIMONIAL SLIDER
+    // ============================================
+    const testimonialSlider = () => {
+        const slider = document.querySelector('.testimonial-slider');
+        if (!slider) return;
+
+        const slides = slider.querySelectorAll('.testimonial-slide');
+        const prevBtn = document.querySelector('.prev-testimonial');
+        const nextBtn = document.querySelector('.next-testimonial');
+
+        let currentSlide = 0;
+
+        const showSlide = (index) => {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+        };
+
+        const nextSlide = () => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        };
+
+        const prevSlide = () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        };
+
+        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+
+        // Auto slide
+        setInterval(nextSlide, 5000);
+    };
+
+    // ============================================
+    // SKILL BAR ANIMATION
+    // ============================================
+    const skillBars = () => {
+        const bars = document.querySelectorAll('.skill-bar__progress');
+
+        if (bars.length === 0) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const width = entry.target.dataset.width;
+                    entry.target.style.width = width;
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        bars.forEach(bar => observer.observe(bar));
+    };
+
+    // ============================================
     // INITIALIZE
     // ============================================
     const init = () => {
@@ -213,6 +323,9 @@
         readingProgress();
         copyCodeButtons();
         externalLinks();
+        lightbox();
+        testimonialSlider();
+        skillBars();
     };
 
     // Run on DOM ready
